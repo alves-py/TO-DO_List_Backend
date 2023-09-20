@@ -1,25 +1,54 @@
 const { registerUser } = require("../database/insertion");
-const { validationDoubleEmail } = require("../database/select");
-const { encryptPassword } = require("../utills/encrypt");
+const { validationDoubleEmail, selectHash } = require("../database/select");
+const { encryptPassword, comparePassword } = require("../utills/encrypt");
+const jwt = require('jsonwebtoken');
 
 
 const registerUsers = async (req, res) => {
     const { name, password, email } = req.body
     try {
-        const emailExistente = await validationDoubleEmail(email);
-        if (emailExistente) {
-            return res.status(400).json({ mensagem: "Este e-mail já foi cadastrado" });
+        const doubleEmail = await validationDoubleEmail(email);
+        if (doubleEmail) {
+            return res.status(400).json({ message: "This email has already been registered" });
         }
         const passwordEncrypt = await encryptPassword(password)
         const result = await registerUser(name, email, passwordEncrypt)
 
-        res.status(201).json({mensagem: "Usuario cadastrado com sucesso!"});
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ mensagem: "erro interno no servidor " });
+        res.status(201).json(result.rows[0]);
+    } catch (err) {
+        return res.status(500).json({ message: "internal server error" });
     }
 }
 
+const loginUser = async (req, res) => {
+    const { email, password } = req.body;
+
+    try{
+        if (!password || !email) {
+            return res.status(400).json({ message: "All fields are mandatory" });
+        }
+    
+        const doubleEmail = await validationDoubleEmail(email);
+        if (!doubleEmail) {
+            return res.status(400).json({ message: "Invalid username and/or password(s)." });
+        }
+
+        const { password: hash, ...user } = await selectHash(email);
+        const passwordAproved = await comparePassword(password, hash);
+        if (!passwordAproved){
+            return res.status(400).json({ message: "Invalid username and/or password(s)." });
+        }
+        const token = await jwt.sign({id: user.id}, process.env.JWT_SENHA, { expiresIn: '8h'});
+        return res.status(200).json({user, token});
+
+    } catch (err) {
+        return res.status(500).json({ message: "internal server error" });
+    }
+
+    
+}
+
 module.exports = {
-    registerUsers
+    registerUsers,
+    loginUser
 }

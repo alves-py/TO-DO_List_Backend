@@ -1,9 +1,10 @@
 const express = require(`express`);
 const { nameEmailPass } = require("./middleware/validation");
-const { registerUsers } = require("./controllers/users");
+const { registerUsers, loginUser } = require("./controllers/users");
 
 const rotas = express();
 
 rotas.post('/usuarios', nameEmailPass, registerUsers);
+rotas.post('/login', loginUser);
 
 module.exports = rotas;
