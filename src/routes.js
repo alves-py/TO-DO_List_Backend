@@ -1,10 +1,14 @@
 const express = require(`express`);
-const { nameEmailPass } = require("./middleware/validation");
+const { nameEmailPass, tokenValidation } = require("./middleware/validation");
 const { registerUsers, loginUser } = require("./controllers/users");
 
-const rotas = express();
+const routes = express();
 
-rotas.post('/usuarios', nameEmailPass, registerUsers);
-rotas.post('/login', loginUser);
+routes.post('/usuarios', nameEmailPass, registerUsers);
+routes.post('/login', loginUser);
 
-module.exports = rotas;
+routes.use(tokenValidation);
+
+//TODO: add routes after login
+
+module.exports = routes;
