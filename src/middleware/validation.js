@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const nameEmailPass = (req, res, next) => {
     const { username, email, password } = req.body
     if (!username || !password || !email) {
-        return res.status(400).json({ mensage: "todos os campos são obrigatorios" });
+        return res.status(400).json({ mensage: "All fields are mandatory" });
     }
     next();
 };
