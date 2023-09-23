@@ -1,5 +1,5 @@
 const express = require(`express`);
-const { nameEmailPass, tokenValidation } = require("./middleware/validation");
+const { nameEmailPass, tokenValidation, validationNameColor } = require("./middleware/validation");
 const { registerUsers, loginUser } = require("./controllers/users");
 const { insertionTask } = require("./controllers/tasks");
 const { insertionTag } = require("./controllers/tags");
@@ -13,7 +13,7 @@ routes.use(tokenValidation);
 
 //TODO: add routes after login
 routes.post('/task', insertionTask);
-routes.post('/tags', insertionTag);
+routes.post('/tags', validationNameColor ,insertionTag);
 
 
 module.exports = routes;

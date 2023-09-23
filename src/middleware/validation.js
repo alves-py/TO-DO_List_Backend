@@ -35,7 +35,18 @@ const tokenValidation =async (req, res, next) => {
     };
 };
 
+const validationNameColor = (req, res, next) => {
+    const { name, color } = req.body;
+
+    if(!name || !color ){
+        return res.status(400).json({ message: "All fields are mandatory" });
+    }
+
+    next();
+}
+
 module.exports = {
     nameEmailPass,
-    tokenValidation
+    tokenValidation,
+    validationNameColor
 }
