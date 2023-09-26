@@ -19,11 +19,18 @@ const selectHash = async (email) => {
 const selectAllUserId = async (id) => {
     const query = "SELECT * FROM Users WHERE user_id = $1";
     const values = [id];
-    return { rows, rowCount } = await connectionDB.query(query, values);
+    return connectionDB.query(query, values);
+}
+
+const selectAlltagsUserId = async (user_id, tag_id) => {
+    const query = "SELECT * FROM Tags WHERE user_id = $1 and tag_id = $2";
+    const values = [ user_id, tag_id ];
+    return connectionDB.query(query, values);
 }
 
 module.exports = {
     validationDoubleEmail,
     selectHash,
-    selectAllUserId
+    selectAllUserId,
+    selectAlltagsUserId
 }
