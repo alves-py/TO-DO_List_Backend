@@ -19,7 +19,7 @@ const tokenValidation =async (req, res, next) => {
     };
     try{
         const token = authorization.split(' ')[1];
-        const { id } = jwt.verify(token, process.env.JWT_SENHA);
+        const { id } = jwt.verify(token, process.env.JWT_PASS);
         const {rows, rowsCount} = await selectAllUserId(id);
 
         if(rowsCount === 0) {

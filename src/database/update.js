@@ -1,6 +1,6 @@
 const connectionDB = require("./connectionDB");
 
-const updateTagUserId = async (name, color, user_id, tag_id) => {
+const updateTagUserId = (name, color, user_id, tag_id) => {
     const query = `UPDATE Tags 
     SET name = $1, color = $2 
     WHERE user_id = $3 and tag_id = $4 RETURNING *`;

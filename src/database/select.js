@@ -16,13 +16,13 @@ const selectHash = async (email) => {
     return rows[0];
 }
 
-const selectAllUserId = async (id) => {
+const selectAllUserId = (id) => {
     const query = "SELECT * FROM Users WHERE user_id = $1";
     const values = [id];
     return connectionDB.query(query, values);
 }
 
-const selectAlltagsUserId = async (user_id, tag_id) => {
+const selectAlltagsUserId = (user_id, tag_id) => {
     const query = "SELECT * FROM Tags WHERE user_id = $1 and tag_id = $2";
     const values = [ user_id, tag_id ];
     return connectionDB.query(query, values);

@@ -20,8 +20,7 @@ const insertionTask = async (req, res) => {
     
         res.status(201).json(result.rows[0]);
     } catch(err){
-        console.log(err);
-        res.status(500).json({ menssage: "internal server error" })
+        res.status(500).json({ message: "internal server error" })
     }
 
 };
