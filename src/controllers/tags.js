@@ -1,6 +1,6 @@
 const { deleteTagUserID } = require("../database/delete");
 const { registerTags } = require("../database/insertion");
-const { selectAlltagsUserId } = require("../database/select");
+const { selectTagUserId, selectAllTags } = require("../database/select");
 const { updateTagUserId } = require("../database/update");
 
 const insertionTag = async (req, res) => {
@@ -25,7 +25,7 @@ const selectTag = async (req, res) => {
         if(!tag_id) {
             res.status(400).json({message: "It is necessary to send a valid tag_id." })
         }
-        const tag = await selectAlltagsUserId(user_id, tag_id);
+        const tag = await selectTagUserId(user_id, tag_id);
 
         if(tag.rowCount === 0) {
             res.status(400).json({message: "It is necessary to send a valid tag_id." })
@@ -76,9 +76,26 @@ const deleteTag = async (req, res) => {
     }
 }
 
+const selectAlltags = async (req, res) => {
+    try {
+        const { user_id } = req.user;
+
+        const tag = await selectAllTags(user_id);
+
+        if(tag.rowCount === 0) {
+            res.status(400).json({message: "It is necessary to send a valid tag_id." })
+        }
+
+        res.status(200).json(tag.rows)
+    } catch (err){
+        res.status(500).json({message: "internal server error" })
+    }
+}
+
 module.exports = {
     insertionTag,
     selectTag,
     updateTag,
-    deleteTag
+    deleteTag,
+    selectAlltags
 }

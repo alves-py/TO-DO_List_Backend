@@ -22,15 +22,23 @@ const selectAllUserId = (id) => {
     return connectionDB.query(query, values);
 }
 
-const selectAlltagsUserId = (user_id, tag_id) => {
+const selectTagUserId = (user_id, tag_id) => {
     const query = "SELECT * FROM Tags WHERE user_id = $1 and tag_id = $2";
     const values = [ user_id, tag_id ];
     return connectionDB.query(query, values);
 }
 
+const selectAllTags = (user_id) => {
+    const query = "SELECT * FROM Tags WHERE user_id = $1";
+    const values = [ user_id ];
+    return connectionDB.query(query, values);
+}
+
+
 module.exports = {
     validationDoubleEmail,
     selectHash,
     selectAllUserId,
-    selectAlltagsUserId
+    selectTagUserId,
+    selectAllTags
 }
