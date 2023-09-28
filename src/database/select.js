@@ -34,11 +34,24 @@ const selectAllTags = (user_id) => {
     return connectionDB.query(query, values);
 }
 
+const selectTask = (user_id, task_id) => {
+    const query = "SELECT * FROM Tasks WHERE user_id = $1 and task_id = $2";
+    const values = [ user_id, task_id ];
+    return connectionDB.query(query, values);
+}
+
+const selectTaskDB = (user_id) => {
+    const query = "SELECT * FROM Tasks WHERE user_id = $1";
+    const values = [ user_id ];
+    return connectionDB.query(query, values);
+}
 
 module.exports = {
     validationDoubleEmail,
     selectHash,
     selectAllUserId,
     selectTagUserId,
-    selectAllTags
+    selectAllTags,
+    selectTask,
+    selectTaskDB
 }
