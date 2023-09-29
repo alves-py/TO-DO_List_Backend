@@ -6,12 +6,11 @@ const { insertionTag, selectTag, updateTag, deleteTag, selectAlltags } = require
 
 const routes = express();
 
-routes.post('/users', nameEmailPass, registerUsers);
+routes.post('/register', nameEmailPass, registerUsers);
 routes.post('/login', loginUser);
 
 routes.use(tokenValidation);
 
-//TODO: add routes after login
 routes.post('/task', insertionTask);
 routes.post('/tags', validationNameColor ,insertionTag);
 routes.delete('/tags/:tag_id', deleteTag);
