@@ -2,6 +2,7 @@ const { registerUser } = require("../database/insertion");
 const { validationDoubleEmail, selectHash } = require("../database/select");
 const { encryptPassword, comparePassword } = require("../utills/encrypt");
 const jwt = require('jsonwebtoken');
+const transport = require('../email');
 
 
 const registerUsers = async (req, res) => {
@@ -13,6 +14,14 @@ const registerUsers = async (req, res) => {
         }
         const passwordEncrypt = await encryptPassword(password)
         const result = await registerUser(username, email, passwordEncrypt)
+
+        //TODO: send email notification
+        transport.sendMail({
+            from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
+            to: `${username} <${email}>`,
+            subject: `Teste 1`,
+            text: `Espero que tenha dado certo! `
+        })
 
         res.status(201).json(result.rows[0]);
     } catch (err) {
@@ -39,9 +48,17 @@ const loginUser = async (req, res) => {
             return res.status(400).json({ message: "Invalid username and/or password(s)." });
         }
         const token = await jwt.sign({id: user.user_id}, process.env.JWT_PASS, { expiresIn: '8h'});
+        transport.sendMail({
+            from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
+            to: `${user.username} <${email}>`,
+            subject: `Teste 2`,
+            text: `Espero que tenha dado certo! 2 `
+        })
+
         return res.status(200).json({user, token});
 
     } catch (err) {
+        console.log(err);
         return res.status(500).json({ message: "internal server error" });
     }
 
