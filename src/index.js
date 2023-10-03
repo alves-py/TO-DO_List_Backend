@@ -1,5 +1,5 @@
-require('dotenv').config();
+import app from './connection.js'
 
-const app = require('./connection');
+import 'dotenv/config.js'
 
-app.listen(process.env.PORT);
+app.listen(process.env.PORT)

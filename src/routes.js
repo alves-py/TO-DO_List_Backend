@@ -1,25 +1,25 @@
-const express = require(`express`);
-const { nameEmailPass, tokenValidation, validationNameColor } = require("./middleware/validation");
-const { registerUsers, loginUser } = require("./controllers/users");
-const { insertionTask, selectTaskUserID, selectAllTask, taskDelete, updateTask } = require("./controllers/tasks");
-const { insertionTag, selectTag, updateTag, deleteTag, selectAlltags } = require("./controllers/tags");
+import express from 'express'
+import { nameEmailPass, tokenValidation, validationNameColor } from './middleware/validation.js'
+import { registerUsers, loginUser } from './controllers/users.js'
+import { insertionTask, selectTaskUserID, selectAllTask, taskDelete, updateTask } from './controllers/tasks.js'
+import { insertionTag, selectTag, updateTag, deleteTag, selectAlltags } from './controllers/tags.js'
 
-const routes = express();
+const routes = express()
 
-routes.post('/register', nameEmailPass, registerUsers);
-routes.post('/login', loginUser);
+routes.post('/register', nameEmailPass, registerUsers)
+routes.post('/login', loginUser)
 
-routes.use(tokenValidation);
+routes.use(tokenValidation)
 
-routes.post('/task', insertionTask);
-routes.post('/tags', validationNameColor ,insertionTag);
-routes.delete('/tags/:tag_id', deleteTag);
-routes.get('/tags/:tag_id', selectTag);
-routes.get('/tags', selectAlltags);
-routes.put('/tags/:tag_id',validationNameColor, updateTag);
-routes.get('/tasks/:task_id', selectTaskUserID);
-routes.get('/tasks', selectAllTask);
-routes.delete('/tasks/:task_id', taskDelete);
-routes.put('/tasks/:task_id', updateTask);
+routes.post('/task', insertionTask)
+routes.post('/tags', validationNameColor, insertionTag)
+routes.delete('/tags/:tag_id', deleteTag)
+routes.get('/tags/:tag_id', selectTag)
+routes.get('/tags', selectAlltags)
+routes.put('/tags/:tag_id', validationNameColor, updateTag)
+routes.get('/tasks/:task_id', selectTaskUserID)
+routes.get('/tasks', selectAllTask)
+routes.delete('/tasks/:task_id', taskDelete)
+routes.put('/tasks/:task_id', updateTask)
 
-module.exports = routes;
+export default routes
