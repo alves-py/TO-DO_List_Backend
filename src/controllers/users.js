@@ -3,6 +3,8 @@ import { validationDoubleEmail, selectHash } from '../database/select.js'
 import { encryptPassword, comparePassword } from '../utills/encrypt.js'
 import jwt from 'jsonwebtoken'
 import transport from '../email.js'
+import fs from 'fs/promises'
+import handlebars from 'handlebars'
 
 const registerUsers = async (req, res) => {
   const { username, password, email } = req.body
@@ -14,12 +16,18 @@ const registerUsers = async (req, res) => {
     const passwordEncrypt = await encryptPassword(password)
     const result = await registerUser(username, email, passwordEncrypt)
 
-    // TODO: send email notification
+    const readHTML = await fs.readFile('./src/templates/register.html')
+
+    const compiled = handlebars.compile(readHTML.toString())
+    const htmlString = compiled({
+      username
+    })
+
     transport.sendMail({
       from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
       to: `${username} <${email}>`,
-      subject: 'Teste 1',
-      text: 'Espero que tenha dado certo! '
+      subject: 'Cadastro Realizado com Sucesso na TodoList',
+      html: htmlString
     })
 
     res.status(201).json(result.rows[0])
@@ -47,13 +55,6 @@ const loginUser = async (req, res) => {
       return res.status(400).json({ message: 'Invalid username and/or password(s).' })
     }
     const token = await jwt.sign({ id: user.user_id }, process.env.JWT_PASS, { expiresIn: '8h' })
-
-    // transport.sendMail({
-    //   from: `${process.env.EMAIL_NAME} <${process.env.EMAIL_FROM}>`,
-    //   to: `${user.username} <${email}>`,
-    //   subject: 'Teste 2',
-    //   text: 'Espero que tenha dado certo! 2 '
-    // })
 
     return res.status(200).json({ user, token })
   } catch (err) {
