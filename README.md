@@ -97,4 +97,4 @@ A documentação detalhada do projeto estará disponível em breve. Ela conterá
 
 Mantenha-se atento para atualizações na documentação.
 
-Divirta-se usando o projeto ToDo List e gerenciando suas tarefas pessoais! Se você tiver alguma dúvida ou precisar de assistência, sinta-se à vontade para entrar em contato com a equipe de suporte
+Divirta-se usando o projeto ToDo List e gerenciando suas tarefas pessoais! Se você tiver alguma dúvida ou precisar de assistência, sinta-se à vontade para entrar em contato comigo.
