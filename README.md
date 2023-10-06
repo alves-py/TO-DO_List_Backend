@@ -2,21 +2,6 @@
 
 Este é o README para o projeto ToDo List, uma aplicação web para gerenciamento de tarefas pessoais. Com este projeto, os usuários podem se cadastrar, realizar login, criar e gerenciar tags e tarefas, visualizar e filtrar tags e tarefas por ID, e também excluir tags e tarefas. A documentação detalhada do projeto estará disponível em breve.
 
-## Dependências
-
-Certifique-se de ter as seguintes dependências instaladas antes de executar o projeto:
-
-```json
-"dependencies": {
-  "bcrypt": "^5.1.1",
-  "dotenv": "^16.3.1",
-  "express": "^4.18.2",
-  "handlebars": "^4.7.8",
-  "jsonwebtoken": "^9.0.2",
-  "nodemailer": "^6.9.5",
-  "pg": "^8.11.3"
-}
-```
 ## Configuração das Variáveis de Ambiente
 
 Antes de iniciar o projeto, você precisará criar um arquivo .env na raiz do projeto e preenchê-lo com as seguintes credenciais e configurações:
