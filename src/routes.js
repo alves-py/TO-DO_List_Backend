@@ -11,7 +11,7 @@ routes.post('/login', loginUser)
 
 routes.use(tokenValidation)
 
-routes.post('/task', insertionTask)
+routes.post('/tasks', insertionTask)
 routes.post('/tags', validationNameColor, insertionTag)
 routes.delete('/tags/:tag_id', deleteTag)
 routes.get('/tags/:tag_id', selectTag)
