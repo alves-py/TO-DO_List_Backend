@@ -7,10 +7,10 @@ const registerUser = (name, email, password) => {
   return connectionDB.query(query, values)
 }
 
-const registerTask = (id_user, content, due_date, priority, is_completed, title) => {
-  const query = `INSERT INTO Tasks (user_id, content, due_date, priority, is_completed, title) 
-    VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`
-  const values = [id_user, content, due_date, priority, is_completed, title]
+const registerTask = (id_user, content, due_date, priority, is_completed, title, tag_id) => {
+  const query = `INSERT INTO Tasks (user_id, content, due_date, priority, is_completed, title, tag_id) 
+    VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`
+  const values = [id_user, content, due_date, priority, is_completed, title, tag_id]
   return connectionDB.query(query, values)
 }
 
