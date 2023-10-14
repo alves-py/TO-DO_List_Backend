@@ -50,7 +50,7 @@ const updateTag = async (req, res) => {
     if (tag.rowCount === 0) {
       res.status(400).json({ message: 'It is necessary to send a valid tag_id.' })
     }
-    res.status(201).json(tag.rows[0])
+    res.status(200).json(tag.rows[0])
   } catch (err) {
     res.status(500).json({ message: 'internal server error' })
   }
