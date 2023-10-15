@@ -6,14 +6,17 @@ import { updateTaskUserId } from '../database/update.js'
 const insertionTask = async (req, res) => {
   try {
     const { user_id } = req.user
-    const { content, due_date, priority, title, tag_id } = req.body
-    let { is_completed } = req.body
+    const { content, due_date, priority, title } = req.body
+    let { is_completed, tag_id } = req.body
 
     if (!priority) {
       return res.status(400).json({ message: 'priority must be sent' })
     }
     if (!is_completed) {
       is_completed = false
+    }
+    if (tag_id === '0') {
+      tag_id = null
     }
     if (priority !== 'Low' && priority !== 'Moderate' && priority !== 'High' && priority !== 'Very High') {
       return res.status(400).json({ message: 'priority: Low or Moderate or High or Very High' })
