@@ -16,7 +16,14 @@ const updateTaskUserId = (content, due_date, priority, is_completed, title, user
   return connectionDB.query(query, values)
 }
 
+const updateBeforeDeleteTag = (tag_id, user_id) => {
+  const query = `UPDATE Tasks SET tag_id = NULL WHERE tag_id = $1 and user_id = $2;  `
+  const values = [tag_id, user_id]
+  return connectionDB.query(query, values)
+}
+
 export {
   updateTagUserId,
-  updateTaskUserId
+  updateTaskUserId,
+  updateBeforeDeleteTag
 }

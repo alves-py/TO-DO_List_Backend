@@ -1,7 +1,7 @@
 import { deleteTagUserID } from '../database/delete.js'
 import { registerTags } from '../database/insertion.js'
 import { selectTagUserId, selectAllTags } from '../database/select.js'
-import { updateTagUserId } from '../database/update.js'
+import { updateBeforeDeleteTag, updateTagUserId } from '../database/update.js'
 
 const insertionTag = async (req, res) => {
   try {
@@ -60,6 +60,8 @@ const deleteTag = async (req, res) => {
   try {
     const { user_id } = req.user
     const { tag_id } = req.params
+    
+    await updateBeforeDeleteTag(tag_id, user_id);
 
     const tag = await deleteTagUserID(user_id, tag_id)
 
