@@ -11,6 +11,7 @@ CREATE TABLE Tasks (
     task_id SERIAL PRIMARY KEY,
     user_id INT NOT NULL REFERENCES Users(user_id),
     title TEXT,
+    tag_id INT REFERENCES Tags(tag_id);
     content TEXT,
     due_date DATE,
     priority priority_enum NOT NULL,
