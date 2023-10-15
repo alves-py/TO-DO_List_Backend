@@ -79,7 +79,7 @@ const taskDelete = async (req, res) => {
 
 const updateTask = async (req, res) => {
   try {
-    const { content, due_date, priority, title } = req.body
+    const { content, due_date, priority, title, tag_id } = req.body
     let { is_completed } = req.body
     const { user_id } = req.user
     const { task_id } = req.params
@@ -94,7 +94,7 @@ const updateTask = async (req, res) => {
       return res.status(400).json({ message: 'priority: Low or Moderate or High or Very High' })
     }
 
-    const tag = await updateTaskUserId(content, due_date, priority, is_completed, title, user_id, task_id)
+    const tag = await updateTaskUserId(content, due_date, priority, is_completed, title, user_id, task_id, tag_id)
 
     if (tag.rowCount === 0) {
       res.status(400).json({ message: 'It is necessary to send a valid task_id.' })
